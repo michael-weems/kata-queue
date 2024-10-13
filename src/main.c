@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "common.h"
 #include "file.h"
@@ -24,6 +25,7 @@ void print_usage(char *argv[]) {
 }
 
 int main(int argc, char *argv[]) { 
+	srand(time(NULL));
 
 	// inputs
 	char *filepath = NULL;
@@ -169,14 +171,31 @@ int main(int argc, char *argv[]) {
 		// TODO: realloc error handling
 
 		// TODO: randomly select the katas for the queue, not just the first 5
+		int *used = calloc(newSize, sizeof(int));
 		for (int i = 0; i < newSize; ++i) {
 			dbhdr->queueSize++;
 			queued = realloc(queued, dbhdr->queueSize*(sizeof(struct queued_t)));
-			if (queue_enqueue(dbhdr, queued, katas[i].title) == STATUS_ERROR){
+			int idx = -1; 
+			while (idx == -1) {
+				int tmp = genRandom(dbhdr->kataCount);
+				bool inuse = false;
+				for (int j = 0; j < i; j++) {
+					if (used[j] == tmp){
+						inuse = true;
+					}
+				}
+				if (!inuse) {
+					idx = tmp;
+				}
+			}
+			used[i] = idx;
+
+			if (queue_enqueue(dbhdr, queued, katas[idx].title) == STATUS_ERROR){
 				printf("error: enqueue kata (%s)\n", katas[i].title);
 				return -1;
 			}
 		}
+		free(used);
 	}
 
 	if (printKatas) {
