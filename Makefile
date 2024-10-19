@@ -6,7 +6,6 @@ OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 init: clean default
 	./$(TARGET) -f $(DATABASE) -n
 	./$(TARGET) -f $(DATABASE) -a "implement a min-heap"
-	./$(TARGET) -f $(DATABASE) -a "implement a max-heap"
 	./$(TARGET) -f $(DATABASE) -a "implement an arraylist"
 	./$(TARGET) -f $(DATABASE) -a "implement a singly linked list"
 	./$(TARGET) -f $(DATABASE) -a "implement a doubly linked list"
