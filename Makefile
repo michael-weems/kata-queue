@@ -19,6 +19,7 @@ init: clean default
 	./$(TARGET) -f $(DATABASE) -a "implement dfs over a graph, recursively"
 	./$(TARGET) -f $(DATABASE) -a "implement bfs over a tree"
 	./$(TARGET) -f $(DATABASE) -a "implement bfs over a graph"
+	./$(TARGET) -f $(DATABASE) -a "solve 'two crystal balls' problem"
 	./$(TARGET) -f $(DATABASE) -g
 	./$(TARGET) -f $(DATABASE) -d
 
